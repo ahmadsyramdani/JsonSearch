@@ -1,0 +1,16 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    json (2.3.1)
+    table_print (1.5.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (= 2.1.4)
+  json
+  table_print
+
+BUNDLED WITH
+   2.1.4

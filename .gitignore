@@ -1,0 +1,4 @@
+.DS_STORE
+bin/.DS_Store
+functional_spec/tmp/
+*.txt

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Add script to run program here.
+# Complete bin/setup so that after it is
+# run, bin/search can be used to launch
+# it.
+
+# This variable contains absolute path of this `search` script
+DIR=`dirname "$0"`; SCRIPT_PATH=`eval "cd \"$SCRIPT_PATH\" && pwd"`
+
+ruby $DIR/main.rb $1
