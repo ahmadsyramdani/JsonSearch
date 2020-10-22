@@ -3,7 +3,7 @@
 # * Build/Compile
 # * Run Test Suit to validate
 #
-# After this is run, bin/parking_lot
+# After this is run, bin/search
 # should Just Work.
 
 DIR=`dirname "$0"`; SCRIPT_PATH=`eval "cd \"$SCRIPT_PATH\" && pwd"`
