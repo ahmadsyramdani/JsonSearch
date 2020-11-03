@@ -17,27 +17,26 @@ class Searchable
     tp fulltextsearch, 'Name', { 'Type' => {:width => 60} }, { 'Designed by' => {:width => 100} }
   end
 
+  private
+  
   def str_to_array(str)
     param = str.downcase.split(/\s(?=(?:[^'"]|'[^']*'|"[^"]*")*$)/) #split by space and remove whitespaces
-    param = rm_double_quote(param) #remove double quotes with a slash
-    return param
+    rm_double_quote(param) #remove double quotes with a slash
   end
 
   def scan_exact_param(str)
     scanner = str.downcase.scan(/".*?"/) #get string covered quotations e.g. 'hello "world"'
-    scanner = rm_double_quote(scanner) #remove double quotes with slash
-    return scanner
+    rm_double_quote(scanner) #remove double quotes with slash
   end
 
   def scan_negative_param(str)
     scanner = str.downcase.scan(/\--\w+/) #get string who has a special character in the beginning e.g. '--array'
-    scanner = rm_double_quote(scanner) #remove double quotes with a slash
-    return scanner
+    rm_double_quote(scanner) #remove double quotes with a slash
   end
 
   def rm_double_quote(arr)
     #remove double quotes with slash "\"here\"" to "here"
-    return arr.map {|s| s.gsub(/(^ +)|( +$)|(^["']+)|(["']+$)/,'')}
+    arr.map {|s| s.gsub(/(^ +)|( +$)|(^["']+)|(["']+$)/,'')}
   end
 
   def fulltextsearch
@@ -46,7 +45,7 @@ class Searchable
   end
 
   def by_name
-    return @data.select{|key| key['Name'].downcase.split(" ").sort === @params.sort }
+    @data.select{|key| key['Name'].downcase.split(" ").sort === @params.sort }
   end
 
   def by_fields
@@ -58,26 +57,25 @@ class Searchable
   end
 
   def by_spesific
-    return @data.select{ |key| Regexp.union(@params) =~ key['Type'].downcase &&
+    @data.select{ |key| Regexp.union(@params) =~ key['Type'].downcase &&
       Regexp.union(@params) =~ key['Designed by'].downcase }
   end
 
   def by_exact
     @no_exact = @params - @exact_param
-    return @data.select{ |key| Regexp.union(@no_exact) =~ key['Type'].downcase &&
+    @data.select{ |key| Regexp.union(@no_exact) =~ key['Type'].downcase &&
       Regexp.union(@exact_param) =~ key['Designed by'].downcase }
   end
 
   def by_global
-    return @data.select{ |key| Regexp.union(@params) =~ key['Name'].downcase ||
+    @data.select{ |key| Regexp.union(@params) =~ key['Name'].downcase ||
       Regexp.union(@params) =~ key['Type'].downcase ||
       Regexp.union(@params) =~ key['Designed by'].downcase }
   end
 
   def by_negative(data)
     @negative_param = @negative_param.map{|s| s.gsub('--', '')}
-    @params = @params - @negative_param
-    return data.reject{ |key| Regexp.union(@negative_param) =~ key['Name'].downcase ||
+    data.reject{ |key| Regexp.union(@negative_param) =~ key['Name'].downcase ||
       Regexp.union(@negative_param) =~ key['Type'].downcase ||
       Regexp.union(@negative_param) =~ key['Designed by'].downcase }
   end
